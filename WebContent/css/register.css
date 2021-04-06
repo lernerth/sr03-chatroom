@@ -1,0 +1,53 @@
+body, html {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.form_container {
+    display: flex;
+    height: 300px;
+    width: 400px;
+    flex-direction: column
+}
+
+.input_container {
+    margin: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+.actions {
+    margin: 15px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.err_msg {
+	color: red;
+    background: #fff2e9;
+    border: 1px solid #ffd0b4;
+    width: 400px;
+    text-align: center;
+}
+
+button {
+	width: 80px;
+    margin: 0 10px;
+    background-color: navy;
+    color: white;
+    border: 0;
+    height: 100%;
+    cursor: pointer;
+}
+
+#tooltip {
+	font-size: 0.5rem;
+	color: red;
+	text-align: right;
+}

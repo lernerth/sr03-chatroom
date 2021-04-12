@@ -8,6 +8,15 @@ public class User {
 	private String fname;
 	private String lname;
 	private String gender;
+	private int id;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getLogin() {
 		return login;
@@ -60,7 +69,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [login=" + login + ", pwd=" + pwd + ", email=" + email + ", fname=" + fname + ", lname=" + lname
-				+ ", gender=" + gender + "]";
+				+ ", gender=" + gender + ", id=" + id + "]";
 	}
 
 }

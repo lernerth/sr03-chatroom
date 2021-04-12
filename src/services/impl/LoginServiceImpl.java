@@ -29,15 +29,21 @@ public class LoginServiceImpl implements LoginService {
 		User u = sd.findUserByLogin(login);
 		return (u != null);
 	}
-	
+
 	@Override
 	public User findUser(String login) {
 		User u = sd.findUserByLogin(login);
 		return u;
 	}
-	
+
 	@Override
 	public int addUser(User u) {
 		return sd.add(u);
 	}
+
+	@Override
+	public User checkUserId(String uid) {
+		return sd.findUserById(uid);
+	}
+
 }

@@ -8,6 +8,8 @@ public interface Dao {
 	User checkLogin(String login, String pwd);
 
 	User findUserByLogin(String login);
+	
+	User findUserById(String id);
 
 //	void delete(String login);
 //	User findUserByLogin(String login);

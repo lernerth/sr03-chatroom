@@ -37,9 +37,11 @@ public class DaoImpl implements Dao {
 			PreparedStatement st = c.prepareStatement(sql);
 			st.setString(1, login);
 			st.setString(2, pwd);
+
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
 				u = new User();
+				u.setId(rs.getInt("id"));
 				u.setLogin(rs.getString("login"));
 				u.setPwd(rs.getString("pwd"));
 				u.setEmail(rs.getString("email"));
@@ -67,6 +69,35 @@ public class DaoImpl implements Dao {
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
 				u = new User();
+				u.setId(rs.getInt("id"));
+				u.setLogin(rs.getString("login"));
+				u.setPwd(rs.getString("pwd"));
+				u.setEmail(rs.getString("email"));
+				u.setFname(rs.getString("fname"));
+				u.setLname(rs.getString("lname"));
+				u.setGender(rs.getString("gender"));
+			}
+			rs.close();
+			st.close();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return u;
+	}
+	
+	@Override
+	public User findUserById(String id) {
+		String sql = "SELECT * FROM user WHERE id=?";
+		User u = null;
+		try {
+			Connection c = DB.getConnection();
+			PreparedStatement st = c.prepareStatement(sql);
+			st.setString(1, id);
+			ResultSet rs = st.executeQuery();
+			while (rs.next()) {
+				u = new User();
+				u.setId(rs.getInt("id"));
 				u.setLogin(rs.getString("login"));
 				u.setPwd(rs.getString("pwd"));
 				u.setEmail(rs.getString("email"));

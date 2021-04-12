@@ -31,7 +31,7 @@
 		String msg = (String) request.getAttribute("msg");
 		if(msg!=null){
 	%>
-		<p class="err_msg" style=""><%=msg%></p>
+		<p class="err_msg"><%=msg%></p>
 	<%	} %>
     <form class="form_container" id='create' method="post" action="UserManager?method=regist">
         <div class="input_container">

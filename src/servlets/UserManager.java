@@ -3,9 +3,11 @@ package servlets;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import models.User;
 import services.LoginService;
@@ -46,7 +48,9 @@ public class UserManager extends HttpServlet {
 			login(req, resp);
 		else if ("regist".equals(method))
 			regist(req, resp);
-		else {
+		else if ("logout".equals(method)) {
+			logout(req, resp);
+		} else {
 			resp.getWriter().write("Requête inconnue");
 		}
 
@@ -54,6 +58,7 @@ public class UserManager extends HttpServlet {
 
 	private void login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html;charset=UTF-8");
+
 		String userLogin = req.getParameter("login");
 		String userPwd = req.getParameter("pwd");
 		String remember = req.getParameter("rememberMe");
@@ -62,9 +67,19 @@ public class UserManager extends HttpServlet {
 		User u = ls.findUser(userLogin);
 		if (u != null) {
 			if (u.getPwd().equals(userPwd)) {
-				resp.getWriter().write("success!");
-				// 重定向到主页
-				// resp.sendRedirect("");
+				// créer Cookies
+				if ("rememberMe".equals(remember)) {
+					Cookie c = new Cookie("uid", u.getId() + "");
+					c.setMaxAge(3 * 24 * 60 * 60);
+					c.setPath("/");
+					resp.addCookie(c);
+				}
+				// créer la session
+				HttpSession hs = req.getSession();
+				hs.setMaxInactiveInterval(15 * 60);
+				hs.setAttribute("user", u);
+				// accéder à la page d'accueil
+				resp.sendRedirect("main.jsp");
 			} else {
 				req.setAttribute("msg", "Your login or password is not correct.");
 				req.getRequestDispatcher("login.jsp").forward(req, resp);
@@ -99,7 +114,7 @@ public class UserManager extends HttpServlet {
 				req.setAttribute("msg", "Login name already used!");
 				req.getRequestDispatcher("regist.jsp").forward(req, resp);
 			} else {
-				//créer un utilisateur
+				// créer un utilisateur
 				User newUser = new User();
 				newUser.setLogin(userLogin);
 				newUser.setFname(userFName);
@@ -118,5 +133,19 @@ public class UserManager extends HttpServlet {
 				}
 			}
 		}
+	}
+
+	private void logout(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// supprimer cookie
+		Cookie c = new Cookie("uid", null + "");
+		c.setMaxAge(0);
+		c.setPath("/");
+		resp.addCookie(c);
+
+		// supprimer session
+		HttpSession hs = req.getSession(false);
+		hs.removeAttribute("user");
+
+		resp.sendRedirect("login.jsp");
 	}
 }

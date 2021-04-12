@@ -6,5 +6,6 @@ public interface LoginService {
 	User checkLogin(String login, String pwd);
 	boolean existLogin(String login);
 	User findUser(String login);
+	User checkUserId(String uid);
 	int addUser(User u);
 }

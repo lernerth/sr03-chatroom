@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import models.User;
-import services.LoginService;
-import services.impl.LoginServiceImpl;
+import services.DataService;
+import services.impl.DataServiceImpl;
 
 /**
  * Servlet implementation class UserManager
@@ -48,9 +48,9 @@ public class UserManager extends HttpServlet {
 			login(req, resp);
 		else if ("regist".equals(method))
 			regist(req, resp);
-		else if ("logout".equals(method)) {
+		else if ("logout".equals(method))
 			logout(req, resp);
-		} else {
+		else {
 			resp.getWriter().write("Requ¨ºte inconnue");
 		}
 
@@ -63,8 +63,8 @@ public class UserManager extends HttpServlet {
 		String userPwd = req.getParameter("pwd");
 		String remember = req.getParameter("rememberMe");
 
-		LoginService ls = new LoginServiceImpl();
-		User u = ls.findUser(userLogin);
+		DataService ds = new DataServiceImpl();
+		User u = ds.findUser(userLogin);
 		if (u != null) {
 			if (u.getPwd().equals(userPwd)) {
 				// cr¨¦er Cookies
@@ -100,7 +100,7 @@ public class UserManager extends HttpServlet {
 		String userEmail = req.getParameter("email");
 		String userGender = req.getParameter("gender");
 
-		LoginService ls = new LoginServiceImpl();
+		DataService ds = new DataServiceImpl();
 
 		if (userLogin.equals("") || userPwd.equals("") || userFName.equals("") || userLName.equals("")
 				|| userEmail.equals("") || userGender.equals("")) {
@@ -108,7 +108,7 @@ public class UserManager extends HttpServlet {
 			req.getRequestDispatcher("regist.jsp").forward(req, resp);
 			// essayer de cr¨¦er un login
 		} else {
-			User u = ls.findUser(userLogin);
+			User u = ds.findUser(userLogin);
 			// login occup¨¦
 			if (u != null) {
 				req.setAttribute("msg", "Login name already used!");
@@ -122,10 +122,10 @@ public class UserManager extends HttpServlet {
 				newUser.setGender(userGender);
 				newUser.setPwd(userPwd);
 				newUser.setEmail(userEmail);
-				int rows = ls.addUser(newUser);
+				int rows = ds.addUser(newUser);
 				if (rows > 0) {
 					req.setAttribute("msg", "Login created successfully!");
-					req.setAttribute("defaultLogin", "ss");
+					req.setAttribute("defaultLogin", newUser.getLogin());
 					req.getRequestDispatcher("login.jsp").forward(req, resp);
 				} else {
 					req.setAttribute("msg", "User creation failed!");

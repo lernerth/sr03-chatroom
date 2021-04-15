@@ -1,6 +1,9 @@
 package services;
 
+import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Set;
+
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
@@ -10,10 +13,16 @@ import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import javax.websocket.server.ServerEndpointConfig;
 
-@ServerEndpoint(value = "/chatserver/{pseudo}", configurator = ChatServer.EndpointConfigurator.class)
+import models.Chat;
+import models.User;
+import services.DataService;
+import services.impl.DataServiceImpl;
+
+@ServerEndpoint(value = "/chatserver/{roomName}", configurator = ChatServer.EndpointConfigurator.class)
 public class ChatServer {
 
 	private static ChatServer singleton = new ChatServer();
+	private static Hashtable<String, Set<Session>> rooms = new Hashtable<String, Set<Session>>();
 
 	private ChatServer() {
 	}
@@ -26,28 +35,51 @@ public class ChatServer {
 	}
 
 	/**
-	 * On maintient toutes les sessions utilisateurs dans une collection.
-	 */
-	private Hashtable<String, Session> sessions = new Hashtable<>();
-
-	/**
 	 * Cette méthode est déclenchée ?chaque connexion d'un utilisateur.
 	 */
 	@OnOpen
-	public void open(Session session, @PathParam("pseudo") String pseudo) {
-		sendMessage("Admin >>> Connection established for " + pseudo);
-		session.getUserProperties().put("pseudo", pseudo);
-		sessions.put(session.getId(), session);
+	public void connect(Session session, @PathParam("roomName") String roomName) {
+		DataService ds = new DataServiceImpl();
+		Chat chat = null;
+		session.getUserProperties().put("roomName", roomName);
+		String login = session.getQueryString().substring("login=".length());
+		session.getUserProperties().put("login", login);
+		User u = ds.findUser(login);
+
+		// login n'existe pas
+		if (u == null) {
+			sendErrMsg(session, "Permission denied! here1");
+			return;
+		}
+
+		if (!rooms.containsKey(roomName)) {
+			chat = ds.findChat(roomName);
+			System.out.println("chatid:" + chat.getId() + " userid:" + u.getId());
+			System.out.println(ds.isUserInChat(chat, u.getId()));
+			if (chat == null || !ds.isUserInChat(chat, u.getId())) {
+				sendErrMsg(session, "Permission denied! here2");
+				return;
+			}
+
+			Set<Session> room = new HashSet<>();
+			room.add(session);
+			rooms.put(chat.getName(), room);
+		} else {
+			rooms.get(roomName).add(session);
+		}
+		boardcast(roomName, login + " joined " + roomName);
+
 	}
 
 	/**
 	 * Cette méthode est déclenchée ?chaque déconnexion d'un utilisateur.
 	 */
 	@OnClose
-	public void close(Session session) {
-		String pseudo = (String) session.getUserProperties().get("pseudo");
-		sessions.remove(session.getId());
-		sendMessage("Admin >>> Connection closed for " + pseudo);
+	public void disconnect(Session session) {
+		String roomName = (String) session.getUserProperties().get("roomName");
+		String login = (String) session.getUserProperties().get("login");
+		rooms.get(roomName).remove(session);
+		boardcast(roomName, login + " left " + roomName);
 	}
 
 	/**
@@ -62,29 +94,49 @@ public class ChatServer {
 	 * Cette méthode est déclenchée ?chaque réception d'un message utilisateur.
 	 */
 	@OnMessage
-	public void handleMessage(String message, Session session) {
-		String pseudo = (String) session.getUserProperties().get("pseudo");
-		String fullMessage = pseudo + " >>> " + message;
+	public void receiveMessage(String message, Session session) {
+		String roomName = (String) session.getUserProperties().get("roomName");
+		String login = (String) session.getUserProperties().get("login");
+		String fullMessage = login + " >>> " + message;
 
-		sendMessage(fullMessage);
+		boardcast(roomName, fullMessage);
 	}
 
 	/**
 	 * Une méthode privée, spécifique ?notre exemple. Elle permet l'envoie d'un message
 	 * aux participants de la discussion.
 	 */
-	private void sendMessage(String fullMessage) {
+	private void boardcast(String roomName, String fullMessage) {
 		// Affichage sur la console du server Web.
 		System.out.println(fullMessage);
 
 		// On envoie le message ?tout le monde.
-		for (Session session : sessions.values()) {
+		for (Session session : rooms.get(roomName)) {
 			try {
 				session.getBasicRemote().sendText(fullMessage);
 			} catch (Exception exception) {
 				System.out.println("ERROR: cannot send message to " + session.getId());
 			}
 		}
+	}
+
+	/**
+	 * Envoyer ¨¤ l'utilisateur current un message erreur
+	 * 
+	 * @param session
+	 * @param errMsg
+	 */
+	private void sendErrMsg(Session session, String errMsg) {
+		// Affichage sur la console du server Web.
+		System.out.println(errMsg);
+
+		// On envoie le message ?tout le monde.
+		try {
+			session.getBasicRemote().sendText(errMsg);
+		} catch (Exception exception) {
+			System.out.println("ERROR: cannot send message to " + session.getId());
+		}
+
 	}
 
 	/**

@@ -1,11 +1,11 @@
 package dao.impl;
 
 import java.sql.*;
-import dao.Dao;
+import dao.UserDao;
 import models.User;
 import tools.DB;
 
-public class DaoImpl implements Dao {
+public class UserDaoImpl implements UserDao {
 	@Override
 	public int add(User user) {
 		String sql = "INSERT INTO user VALUES(null, ?, ?, ?, ?, ?, ?)";

@@ -1,13 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"
-    import="services.LoginService,services.impl.LoginServiceImpl,models.User"%>
+    import="services.DataService,services.impl.DataServiceImpl,models.*,java.util.*"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%
 	if(session.getAttribute("user")==null){
 		response.sendRedirect("login.jsp");
 		return;
 	}
 	User u = (User) session.getAttribute("user");
+	DataService sd = new DataServiceImpl();
+
+	List<Chat> myownChats = sd.findOwnChat(u.getId());
+
+	pageContext.setAttribute("chats", myownChats);
 %>
+
 <!DOCTYPE html>
 <html>
 
@@ -37,6 +45,49 @@
                     </button>    
                 </form>
                 <label class="menu_title">Logout</label>
+            </div>
+        </div>
+    </div>
+    <%
+		String msg = (String) request.getAttribute("msg");
+		if (msg != null) {
+	%>
+		<p class="err_msg" style=""><%=msg%></p>
+	<%}%>
+    <div class="chatrooms_containre">
+    	<form action="/Devoir2/roomCreation.jsp" method="post">	
+    		<Button type="submit">Create</Button>
+    	</form>
+        <div class="own_chats">
+            <h1 class="chat_type">Mes Chats</h1>
+            <div class="chats_container">
+                <form>
+                	<c:forEach items="${chats}" var="chat">
+                		<a href="/Devoir2/chatroom.jsp?roomName=${chat.getName()}">${chat.getName()}</a> <br/>
+                	</c:forEach>
+                </form>
+            </div>
+        </div>
+
+        <div class="invited_chats">
+            <h1 class="chat_type">Chats Inivtes</h1>
+            <div class="chats_container">
+                <form>
+                    <Button class="chat_link">
+    
+                    </Button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="invitations">
+            <h1 class="chat_type">Invitations</h1>
+            <div class="chats_container">
+                <form>
+                    <Button class="invitation_link">
+    
+                    </Button>
+                </form>
             </div>
         </div>
     </div>

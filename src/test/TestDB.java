@@ -6,13 +6,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.*;
 
-import dao.Dao;
-import dao.impl.DaoImpl;
+import dao.UserDao;
+import dao.impl.UserDaoImpl;
 import models.User;
 
 public class TestDB {
 	public static void main(String[] args) throws Exception {
-		Dao sd = new DaoImpl();
+		UserDao sd = new UserDaoImpl();
 //		User user = new User();
 //		user.setLogin("test");
 //		user.setFname("test");

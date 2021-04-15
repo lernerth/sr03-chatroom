@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"
-	import="services.LoginService,services.impl.LoginServiceImpl,models.User"%>
+	import="services.DataService,services.impl.DataServiceImpl,models.User"%>
 
 <%
 //consulter cookie
@@ -13,8 +13,8 @@ if (cookies != null) {
 		}
 	}
 	if (!"".equals(uid)) {
-		LoginService ls = new LoginServiceImpl();
-		User u = ls.checkUserId(uid);
+		DataService ds = new DataServiceImpl();
+		User u = ds.checkUserId(uid);
 		if (u != null) {
 			//accéder à la page d'accueil
 			session.setMaxInactiveInterval(15 * 60);
@@ -40,15 +40,13 @@ if (cookies != null) {
 
 	<h2 class="title">Chatroom Login</h2>
 	<%
-	String msg = (String) request.getAttribute("msg");
-	Object defaultLoginObj = request.getAttribute("defaultLogin");
-	String defaultLogin = defaultLoginObj == null ? "" : (String) defaultLoginObj;
-	if (msg != null) {
+		String msg = (String) request.getAttribute("msg");
+		Object defaultLoginObj = request.getAttribute("defaultLogin");
+		String defaultLogin = defaultLoginObj == null ? "" : (String) defaultLoginObj;
+		if (msg != null) {
 	%>
-	<p class="err_msg" style=""><%=msg%></p>
-	<%
-	}
-	%>
+		<p class="err_msg" style=""><%=msg%></p>
+	<%}%>
 	<form class="form_container" method="post"
 		action="UserManager?method=login">
 		<div class="input_container">

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"
-	import="services.LoginService,services.impl.LoginServiceImpl,models.User"%>
+	import="services.DataService,services.impl.DataServiceImpl,models.User"%>
 <%
 if (session.getAttribute("user") == null) {
 	response.sendRedirect("login.jsp");

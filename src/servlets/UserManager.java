@@ -51,7 +51,7 @@ public class UserManager extends HttpServlet {
 		else if ("logout".equals(method))
 			logout(req, resp);
 		else {
-			resp.getWriter().write("Requ¨ºte inconnue");
+			resp.getWriter().write("Requï¿½ï¿½te inconnue");
 		}
 
 	}
@@ -67,18 +67,18 @@ public class UserManager extends HttpServlet {
 		User u = ds.findUser(userLogin);
 		if (u != null) {
 			if (u.getPwd().equals(userPwd)) {
-				// cr¨¦er Cookies
+				// crï¿½ï¿½er Cookies
 				if ("rememberMe".equals(remember)) {
 					Cookie c = new Cookie("uid", u.getId() + "");
 					c.setMaxAge(3 * 24 * 60 * 60);
 					c.setPath("/");
 					resp.addCookie(c);
 				}
-				// cr¨¦er la session
+				// crï¿½ï¿½er la session
 				HttpSession hs = req.getSession();
 				hs.setMaxInactiveInterval(15 * 60);
 				hs.setAttribute("user", u);
-				// acc¨¦der ¨¤ la page d'accueil
+				// accï¿½ï¿½der ï¿½ï¿½ la page d'accueil
 				resp.sendRedirect("main.jsp");
 			} else {
 				req.setAttribute("msg", "Your login or password is not correct.");
@@ -106,15 +106,15 @@ public class UserManager extends HttpServlet {
 				|| userEmail.equals("") || userGender.equals("")) {
 			req.setAttribute("msg", "Please check your inputs");
 			req.getRequestDispatcher("regist.jsp").forward(req, resp);
-			// essayer de cr¨¦er un login
+			// essayer de crï¿½ï¿½er un login
 		} else {
 			User u = ds.findUser(userLogin);
-			// login occup¨¦
+			// login occupï¿½ï¿½
 			if (u != null) {
 				req.setAttribute("msg", "Login name already used!");
 				req.getRequestDispatcher("regist.jsp").forward(req, resp);
 			} else {
-				// cr¨¦er un utilisateur
+				// crï¿½ï¿½er un utilisateur
 				User newUser = new User();
 				newUser.setLogin(userLogin);
 				newUser.setFname(userFName);

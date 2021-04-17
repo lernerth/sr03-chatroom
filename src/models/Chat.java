@@ -36,5 +36,19 @@ public class Chat {
 	public String toString() {
 		return "Chat [name=" + name + ", id=" + id + ", ownerId=" + ownerId + "]";
 	}
-
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) {
+		    return true;
+		}
+	
+		if (!(obj instanceof Chat)) {
+		    return false;
+		}
+	
+		Chat other = (Chat) obj;
+	
+		return name.equals(other.name) && id == other.id && ownerId== other.ownerId;
+	}
 }

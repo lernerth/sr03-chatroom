@@ -29,4 +29,8 @@ public interface DataService {
 	
 	Set<Integer> findUserIdsOfChat(Chat chat);
 
+	boolean deleteChat(String roomName);
+
+	boolean ifUserOwnChat(int uId, String roomName);
+
 }

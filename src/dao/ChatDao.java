@@ -12,4 +12,7 @@ public interface ChatDao {
 	List<Chat> findChatByOwner(int ownerId);
 
 	Set<Integer> findUserIdsByChat(Chat chat);
+
+	boolean deleteChat(String roomName);
+
 }

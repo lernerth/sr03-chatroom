@@ -41,7 +41,7 @@ public class ChatDaoImpl implements ChatDao {
 				rows1 = st1.executeUpdate();		
 			}
 
-			// Rollback toutes les insertions lors qu'une des deux ¨¦chou¨¦e
+			// Rollback toutes les insertions lors qu'une des deux ï¿½ï¿½chouï¿½ï¿½e
 			if (rows <= 0 || rows1 <= 0) {
 				c.rollback();
 				rows = rows <= 0 ? rows : rows1;
@@ -128,6 +128,26 @@ public class ChatDaoImpl implements ChatDao {
 		}
 
 		return chatSet;
+	}
+
+	@Override
+	public boolean deleteChat(String roomName) {
+		String sql ="DELETE c,cu from chat c LEFT JOIN chat_user cu ON c.id=cu.chat_id WHERE c.name=?";
+		try {
+			Connection c = DB.getConnection();
+			c.setAutoCommit(false);
+			PreparedStatement st = c.prepareStatement(sql);
+			st.setString(1, roomName);
+			System.out.println("sql   "+roomName);
+			st.execute();
+			c.commit();
+			st.close();
+			return true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			//c.rollback();
+			return false;
+		}
 	}
 
 }

@@ -12,4 +12,11 @@ public interface ChatDao {
 	List<Chat> findChatByOwner(int ownerId);
 
 	Set<Integer> findUserIdsByChat(Chat chat);
+	
+	Set<Integer> findChatIdsByUser(int userId);
+	
+	List<Chat> findInvitedChatByUserId(int userId);
+	
+	int addUsersInChat(int chatId, int[] userIds);
+	
 }

@@ -24,9 +24,16 @@ public interface DataService {
 	List<Chat> findOwnChat(int ownerId);
 
 	boolean existChat(String chatName);
-	
+
 	boolean isUserInChat(Chat chat, int userId);
-	
+
 	Set<Integer> findUserIdsOfChat(Chat chat);
 
+	List<Chat> findInvitedChat(int userId);
+
+	int addUsersInChat(int chatId, int[] userIds);
+
+	List<User> findUsersNotInChat(String chatName);
+
+	List<User> findUsersInChat(String chatName);
 }

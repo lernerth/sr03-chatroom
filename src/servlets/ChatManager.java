@@ -45,6 +45,8 @@ public class ChatManager extends HttpServlet {
 		String method = req.getParameter("method");
 		if ("create".equals(method))
 			createRoom(req, resp);
+		if ("invite".equals(method))
+			inviteUsers(req, resp);
 		else {
 			resp.getWriter().write("Requ¨ºte inconnue");
 		}
@@ -84,4 +86,32 @@ public class ChatManager extends HttpServlet {
 		}
 	}
 
+	private void inviteUsers(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.setContentType("text/html;charset=UTF-8");
+		HttpSession hs = req.getSession();
+		String roomName = req.getParameter("roomName");
+		String[] userIdsStr = req.getParameterValues("invitedUserIds");
+		int[] userIds = new int[userIdsStr.length];
+
+		for (int i = 0; i < userIdsStr.length; i++) {
+			userIds[i] = Integer.valueOf(userIdsStr[i]);
+		}
+
+		DataService ds = new DataServiceImpl();
+		Chat chat = ds.findChat(roomName);
+
+		if (userIds.length > 0 && !"".equals(roomName)) {
+			if (chat != null) {
+				int rows = ds.addUsersInChat(chat.getId(), userIds);
+				if (rows > 0) {
+					req.setAttribute("msg", "Invitations sent.");
+					req.getRequestDispatcher("chatroom.jsp").forward(req, resp);
+					return;
+				}
+			}
+		}
+		req.setAttribute("msg", "Invitations failed.");
+		req.getRequestDispatcher("chatroom.jsp").forward(req, resp);
+
+	}
 }

@@ -10,10 +10,11 @@
 	}
 	User u = (User) session.getAttribute("user");
 	DataService sd = new DataServiceImpl();
-
+	List<Chat> invitedChats = sd.findInvitedChat(u.getId());
 	List<Chat> myownChats = sd.findOwnChat(u.getId());
 
-	pageContext.setAttribute("chats", myownChats);
+	pageContext.setAttribute("ownChats", myownChats);
+	pageContext.setAttribute("invitedChats", invitedChats);
 %>
 
 <!DOCTYPE html>
@@ -59,10 +60,10 @@
     		<Button type="submit">Create</Button>
     	</form>
         <div class="own_chats">
-            <h1 class="chat_type">Mes Chats</h1>
+            <h1 class="chat_type">My Chats</h1>
             <div class="chats_container">
                 <form>
-                	<c:forEach items="${chats}" var="chat">
+                	<c:forEach items="${ownChats}" var="chat">
                 		<a href="/Devoir2/chatroom.jsp?roomName=${chat.getName()}">${chat.getName()}</a> <br/>
                 	</c:forEach>
                 </form>
@@ -70,12 +71,12 @@
         </div>
 
         <div class="invited_chats">
-            <h1 class="chat_type">Chats Inivtes</h1>
+            <h1 class="chat_type">Invited Chats</h1>
             <div class="chats_container">
                 <form>
-                    <Button class="chat_link">
-    
-                    </Button>
+                    <c:forEach items="${invitedChats}" var="chat">
+                		<a href="/Devoir2/chatroom.jsp?roomName=${chat.getName()}">${chat.getName()}</a> <br/>
+                	</c:forEach>
                 </form>
             </div>
         </div>

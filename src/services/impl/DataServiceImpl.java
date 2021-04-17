@@ -1,5 +1,6 @@
 package services.impl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -84,6 +85,32 @@ public class DataServiceImpl implements DataService {
 	@Override
 	public Set<Integer> findUserIdsOfChat(Chat chat) {
 		return cd.findUserIdsByChat(chat);
+	}
+
+	@Override
+	public List<Chat> findInvitedChat(int userId) {
+		return cd.findInvitedChatByUserId(userId);
+	}
+
+	@Override
+	public int addUsersInChat(int chatId, int[] userIds) {
+		return cd.addUsersInChat(chatId, userIds);
+	}
+
+	@Override
+	public List<User> findUsersNotInChat(String chatName) {
+		Chat chat = cd.findChatByName(chatName);
+		if (chat != null)
+			return ud.findUsersNotInChat(chat.getId());
+		return null;
+	}
+
+	@Override
+	public List<User> findUsersInChat(String chatName) {
+		Chat chat = cd.findChatByName(chatName);
+		if (chat != null)
+			return ud.findUsersInChat(chat.getId());
+		return null;
 	}
 
 }

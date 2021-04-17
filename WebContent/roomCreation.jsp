@@ -34,7 +34,7 @@
         </div>
         
         <div class="input_container">
-            <label class="big_lable">Email</label>
+            <label class="big_lable">Invite users</label>
             <select name="invitedUserIds" multiple>
             	<option value="1111">1111</option>
             	<option value="22">22</option>

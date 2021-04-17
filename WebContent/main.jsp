@@ -62,11 +62,14 @@
         <div class="own_chats">
             <h1 class="chat_type">My Chats</h1>
             <div class="chats_container">
-                <form>
-                	<c:forEach items="${ownChats}" var="chat">
-                		<a href="/Devoir2/chatroom.jsp?roomName=${chat.getName()}">${chat.getName()}</a> <br/>
-                	</c:forEach>
-                </form>
+               	<c:forEach items="${ownChats}" var="chat">
+               		<a href="/Devoir2/chatroom.jsp?roomName=${chat.getName()}">${chat.getName()}</a>
+                	<form action="/Devoir2/ChatManager?method=delete" method="post">
+    							<Button type="submit" name="roomName" value=${chat.getName()}>Delete</Button>
+    				</form>
+    			 	<br/>
+               	</c:forEach>
+                
             </div>
         </div>
 

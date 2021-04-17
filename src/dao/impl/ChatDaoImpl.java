@@ -214,4 +214,21 @@ public class ChatDaoImpl implements ChatDao {
 		return res;
 	}
 
+	@Override
+	public boolean deleteChat(String roomName) {
+		String sql = "DELETE c,cu from chat c LEFT JOIN chat_user cu ON c.id=cu.chat_id WHERE c.name=?";
+		try {
+			Connection c = DB.getConnection();
+			PreparedStatement st = c.prepareStatement(sql);
+			st.setString(1, roomName);
+			st.execute();
+			
+			st.close();
+			return true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return false;
+		}
+	}
+
 }

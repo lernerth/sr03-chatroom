@@ -113,4 +113,18 @@ public class DataServiceImpl implements DataService {
 		return null;
 	}
 
+	@Override
+	public boolean deleteChat(String roomName) {
+		return cd.deleteChat(roomName);
+	}
+
+	@Override
+	public boolean ifUserOwnChat(int uId, String chatName) {
+		Chat c = findChat(chatName);
+		if (c != null)
+			return c.getOwnerId() == uId;
+		else
+			return false;
+	}
+
 }

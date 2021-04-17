@@ -36,4 +36,9 @@ public interface DataService {
 	List<User> findUsersNotInChat(String chatName);
 
 	List<User> findUsersInChat(String chatName);
+
+	boolean deleteChat(String roomName);
+
+	boolean ifUserOwnChat(int uId, String roomName);
+
 }

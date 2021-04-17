@@ -47,8 +47,11 @@ public class ChatManager extends HttpServlet {
 			createRoom(req, resp);
 		if ("invite".equals(method))
 			inviteUsers(req, resp);
+		if ("delete".equals(method))
+			deleteRoom(req, resp);
 		else {
 			resp.getWriter().write("Requ¨ºte inconnue");
+			req.getRequestDispatcher("main.jsp").forward(req, resp);
 		}
 	}
 
@@ -114,4 +117,32 @@ public class ChatManager extends HttpServlet {
 		req.getRequestDispatcher("chatroom.jsp").forward(req, resp);
 
 	}
+
+	private void deleteRoom(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.setContentType("text/html;charset=UTF-8");
+		String roomName = req.getParameter("roomName");
+		HttpSession hs = req.getSession();
+		User u = (User) hs.getAttribute("user");
+		DataService ds = new DataServiceImpl();
+		if (u == null) {
+			req.setAttribute("msg", "Failed to delete");
+			req.getRequestDispatcher("main.jsp").forward(req, resp);
+		} else {
+			int uId = u.getId();
+			if (ds.ifUserOwnChat(uId, roomName)) {
+				if (ds.deleteChat(roomName)) {
+					req.setAttribute("msg", "Room " + roomName + " Successfully deleted");
+					req.getRequestDispatcher("main.jsp").forward(req, resp);
+				} else {
+					req.setAttribute("msg", "Room " + roomName + " Failed to delete");
+					req.getRequestDispatcher("main.jsp").forward(req, resp);
+				}
+			} else {
+				req.setAttribute("msg", "Permission denied!");
+				req.getRequestDispatcher("main.jsp").forward(req, resp);
+			}
+		}
+
+	}
+
 }

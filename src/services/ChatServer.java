@@ -54,8 +54,6 @@ public class ChatServer {
 
 		if (!rooms.containsKey(roomName)) {
 			chat = ds.findChat(roomName);
-			System.out.println("chatid:" + chat.getId() + " userid:" + u.getId());
-			System.out.println(ds.isUserInChat(chat, u.getId()));
 			if (chat == null || !ds.isUserInChat(chat, u.getId())) {
 				sendErrMsg(session, "Permission denied! here2");
 				return;

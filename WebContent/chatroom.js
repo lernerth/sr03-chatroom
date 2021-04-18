@@ -1,3 +1,10 @@
+function handleChange() {
+    console.log("change");
+    let inviContainer = document.getElementById("blockInvitation");
+    let visibility = inviContainer.style.visibility
+    inviContainer.style.visibility = visibility === "visible" ? "hidden" : "visible";
+}
+
 window.addEventListener("load", function (event) {
 
     let roomName = document.getElementById("roomName").innerHTML;
@@ -22,7 +29,6 @@ window.addEventListener("load", function (event) {
     ws.addEventListener("close", function (evt) {
         console.log("Connection closed");
     });
-
 
     let btnSend = document.getElementById("btnSend");
     btnSend.addEventListener("click", function (clickEvent) {

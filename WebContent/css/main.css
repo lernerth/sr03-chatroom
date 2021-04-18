@@ -1,5 +1,9 @@
 body, html {
-    background: rgb(214, 245, 213);
+    background: #f6f7ff;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    position: absolute;
 }
 
 .menu_container {
@@ -24,6 +28,7 @@ body, html {
     text-align: center;
     line-height: 80px;
     margin-top: 15px;
+    cursor: default;
 }
 
 .menu_items_container {
@@ -68,4 +73,60 @@ body, html {
 .menu_title {
     font-weight: 400;
     font-size: 0.8rem;
+}
+
+.button_create {
+    background-color: lemonchiffon;
+    width: 100px;
+    height: 50px;
+    text-align: center;
+    border-color: white;
+    border-style: solid;
+}
+
+.chat_item {
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    background-color: cornsilk;
+    margin: 5px 10px;
+}
+
+a {
+    margin: 15px;
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
+}
+
+a:visited {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+.delete_button {
+    margin: 15px;
+    border: 0;
+    background: inherit;
+    cursor: pointer;
+}
+
+.delete_button:hover {
+    color: crimson;
+}
+
+.chatrooms_containre {
+	width: 80%;
+}
+
+.own_chats, .invited_chats {
+	padding: 10px 20px 20px 20px;
+	background: #fff;
+	border-radius: 20px;
+    box-shadow: 0px 6px 15px 0px rgb(74 99 231 / 10%);
+    margin-top: 30px;
+    margin-left: 20px;
 }

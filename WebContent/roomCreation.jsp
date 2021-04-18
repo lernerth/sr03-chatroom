@@ -33,15 +33,6 @@
             <input type="text" name="Owner" value="<%=u.getLogin()%>" disabled/>
         </div>
         
-        <div class="input_container">
-            <label class="big_lable">Email</label>
-            <select name="invitedUserIds" multiple>
-            	<option value="1111">1111</option>
-            	<option value="22">22</option>
-            	<option value="33">33</option>
-            </select>
-        </div>
-        
         <div class="actions">
             <button onclick="window.location.href='/Devoir2/main.jsp'">Cancel</button>
             <button type="submit" form="create">Confirm</button>

@@ -1,6 +1,10 @@
 package dao.impl;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import dao.UserDao;
 import models.User;
 import tools.DB;
@@ -85,7 +89,7 @@ public class UserDaoImpl implements UserDao {
 		}
 		return u;
 	}
-	
+
 	@Override
 	public User findUserById(String id) {
 		String sql = "SELECT * FROM user WHERE id=?";
@@ -112,5 +116,65 @@ public class UserDaoImpl implements UserDao {
 			ex.printStackTrace();
 		}
 		return u;
+	}
+
+	@Override
+	public List<User> findUsersNotInChat(int chatId) {
+		String sql = "SELECT * FROM user WHERE id NOT IN" + "(SELECT user_id FROM chat_user WHERE chat_id=?)";
+		List<User> users = new ArrayList<>();
+		User u = null;
+		try {
+			Connection c = DB.getConnection();
+			PreparedStatement st = c.prepareStatement(sql);
+			st.setInt(1, chatId);
+			ResultSet rs = st.executeQuery();
+			while (rs.next()) {
+				u = new User();
+				u.setId(rs.getInt("id"));
+				u.setLogin(rs.getString("login"));
+				u.setPwd(rs.getString("pwd"));
+				u.setEmail(rs.getString("email"));
+				u.setFname(rs.getString("fname"));
+				u.setLname(rs.getString("lname"));
+				u.setGender(rs.getString("gender"));
+				users.add(u);
+			}
+			rs.close();
+			st.close();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return users;
+	}
+
+	@Override
+	public List<User> findUsersInChat(int chatId) {
+		String sql = "SELECT * FROM user WHERE id IN" + "(SELECT user_id FROM chat_user WHERE chat_id=?)";
+		List<User> users = new ArrayList<>();
+		User u = null;
+		try {
+			Connection c = DB.getConnection();
+			PreparedStatement st = c.prepareStatement(sql);
+			st.setInt(1, chatId);
+			ResultSet rs = st.executeQuery();
+			while (rs.next()) {
+				u = new User();
+				u.setId(rs.getInt("id"));
+				u.setLogin(rs.getString("login"));
+				u.setPwd(rs.getString("pwd"));
+				u.setEmail(rs.getString("email"));
+				u.setFname(rs.getString("fname"));
+				u.setLname(rs.getString("lname"));
+				u.setGender(rs.getString("gender"));
+				users.add(u);
+			}
+			rs.close();
+			st.close();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return users;
 	}
 }

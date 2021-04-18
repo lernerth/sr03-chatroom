@@ -1,0 +1,42 @@
+body, html {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background: #f6f7ff;
+}
+
+.profil_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.input_container {
+    width: 300px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+}
+
+button {
+    width: 80px;
+    background-color: #4a63e7;
+    color: white;
+    border: 0;
+    height: 100%;
+    cursor: pointer;
+}
+
+.actions {
+    margin: 10px 0;
+    width: 300px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}

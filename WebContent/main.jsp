@@ -10,10 +10,11 @@
 	}
 	User u = (User) session.getAttribute("user");
 	DataService sd = new DataServiceImpl();
-
+	List<Chat> invitedChats = sd.findInvitedChat(u.getId());
 	List<Chat> myownChats = sd.findOwnChat(u.getId());
 
-	pageContext.setAttribute("chats", myownChats);
+	pageContext.setAttribute("ownChats", myownChats);
+	pageContext.setAttribute("invitedChats", invitedChats);
 %>
 
 <!DOCTYPE html>
@@ -38,6 +39,14 @@
                 </form>
                 <label class="menu_title">Profil</label>
             </div>
+			<div class="menu_item" id="create">
+                <form>
+                    <button type="submit" class="menu_button" formaction="/Devoir2/roomCreation.jsp" formmethod="post">
+                        <span class="iconfont icon-create"></span>
+                    </button>    
+                </form>
+                <label class="menu_title">Create</label>
+            </div>
             <div class="menu_item" id="logout">
                 <form>
                     <button type="submit" class="menu_button" formaction="UserManager?method=logout" formmethod="post">
@@ -55,41 +64,53 @@
 		<p class="err_msg" style=""><%=msg%></p>
 	<%}%>
     <div class="chatrooms_containre">
-    	<form action="/Devoir2/roomCreation.jsp" method="post">	
-    		<Button type="submit">Create</Button>
-    	</form>
         <div class="own_chats">
-            <h1 class="chat_type">Mes Chats</h1>
+            <h1 class="chat_type">My Chats</h1>
+            <div class="chats_container">
+               	<c:forEach items="${ownChats}" var="chat">
+                       <div class="chat_item">
+                            <a href="/Devoir2/chatroom.jsp?roomName=${chat.getName()}" title="join">${chat.getName()}</a>
+                            <form action="/Devoir2/ChatManager?method=delete" method="post">
+                                <Button 
+                                    class="delete_button"
+                                    type="submit"
+                                    name="roomName" 
+                                    value="${chat.getName()}"
+                                    title="delete"
+                                >
+                                    <span class="iconfont icon-delete"></span>
+                                </Button>
+                            </form>
+                       </div>
+               	</c:forEach>
+                
+            </div>
+        </div>
+
+        <div class="invited_chats">
+            <h1 class="chat_type">Invited Chats</h1>
             <div class="chats_container">
                 <form>
-                	<c:forEach items="${chats}" var="chat">
-                		<a href="/Devoir2/chatroom.jsp?roomName=${chat.getName()}">${chat.getName()}</a> <br/>
+                    <c:forEach items="${invitedChats}" var="chat">
+						<div class="chat_item">
+                            <a href="/Devoir2/chatroom.jsp?roomName=${chat.getName()}" title="join">${chat.getName()}</a>
+                            <form action="/Devoir2/ChatManager?method=delete" method="post">
+                                <Button 
+                                    class="delete_button"
+                                    type="submit"
+                                    name="roomName" 
+                                    value=${chat.getName()}
+                                    title="delete"
+                                >
+                                    <span class="iconfont icon-delete"></span>
+                                </Button>
+                            </form>
+                       </div>
                 	</c:forEach>
                 </form>
             </div>
         </div>
 
-        <div class="invited_chats">
-            <h1 class="chat_type">Chats Inivtes</h1>
-            <div class="chats_container">
-                <form>
-                    <Button class="chat_link">
-    
-                    </Button>
-                </form>
-            </div>
-        </div>
-        
-        <div class="invitations">
-            <h1 class="chat_type">Invitations</h1>
-            <div class="chats_container">
-                <form>
-                    <Button class="invitation_link">
-    
-                    </Button>
-                </form>
-            </div>
-        </div>
     </div>
 </body>
 

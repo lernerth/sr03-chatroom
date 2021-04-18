@@ -1,0 +1,29 @@
+#history {
+    display: block;
+    width: 500px;
+    height: 300px;
+}
+
+#txtMessage {
+    display: inline-block;
+    width: 300px;
+}
+
+#btnSend {
+    display: inline-block;
+    width: 180px;
+}
+
+#btnClose {
+    display: block;
+    width: 500px;
+}
+
+#btnInvite {
+    display: block;
+    width: 500px;
+}
+
+#blockInvitation{
+    visibility: hidden;
+}

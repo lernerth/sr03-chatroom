@@ -5,6 +5,8 @@ body, html {
     align-items: center;
     height: 100%;
     width: 100%;
+    position: absolute;
+    background: #f6f7ff;
 }
 
 .form_container {
@@ -34,7 +36,7 @@ body, html {
 button {
     width: 50px;
     margin: 0 10px;
-    background-color: navy;
+    background-color: #4a63e7;
     color: white;
     border: 0;
     height: 100%;

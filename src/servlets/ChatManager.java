@@ -45,13 +45,12 @@ public class ChatManager extends HttpServlet {
 		String method = req.getParameter("method");
 		if ("create".equals(method))
 			createRoom(req, resp);
-		if ("invite".equals(method))
+		else if ("invite".equals(method))
 			inviteUsers(req, resp);
-		if ("delete".equals(method))
+		else if ("delete".equals(method))
 			deleteRoom(req, resp);
 		else {
 			resp.getWriter().write("Requ¨ºte inconnue");
-			req.getRequestDispatcher("main.jsp").forward(req, resp);
 		}
 	}
 
@@ -59,8 +58,7 @@ public class ChatManager extends HttpServlet {
 		resp.setContentType("text/html;charset=UTF-8");
 		HttpSession hs = req.getSession();
 		String roomName = req.getParameter("roomName");
-		String userPwd = req.getParameter("Owner");
-		String[] userIds = req.getParameterValues("invitedUserIds");
+		String desc = req.getParameter("desc");
 
 		User u = (User) hs.getAttribute("user");
 		DataService ds = new DataServiceImpl();
@@ -77,6 +75,7 @@ public class ChatManager extends HttpServlet {
 				Chat newChat = new Chat();
 				newChat.setName(roomName);
 				newChat.setOwnerId(u.getId());
+				newChat.setDesc(desc);
 				int rows = ds.addChat(newChat, u.getId());
 				if (rows > 0) {
 					req.setAttribute("msg", "Room created successfully!");

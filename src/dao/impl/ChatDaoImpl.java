@@ -1,9 +1,12 @@
 package dao.impl;
 
 import java.sql.Connection;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -17,7 +20,7 @@ import tools.DB;
 public class ChatDaoImpl implements ChatDao {
 	@Override
 	public int add(Chat chat, int ownerId) {
-		String sql = "INSERT INTO chat VALUES(null, ?, ?)";
+		String sql = "INSERT INTO chat VALUES(null, ?, ?, ?, ?)";
 		String sql1 = "INSERT INTO chat_user VALUES(null, ?, ?)";
 		int rows = 0;
 		int rows1 = 0;
@@ -31,6 +34,12 @@ public class ChatDaoImpl implements ChatDao {
 
 			st.setString(1, chat.getName());
 			st.setInt(2, chat.getOwnerId());
+			st.setString(3, chat.getDesc());
+
+			Date date = new Date();
+			Timestamp timeStamp = new Timestamp(date.getTime());
+			st.setTimestamp(4, timeStamp);
+
 			rows = st.executeUpdate();
 			ResultSet rs = st.getGeneratedKeys();
 
@@ -72,7 +81,9 @@ public class ChatDaoImpl implements ChatDao {
 				chat.setId(rs.getInt("id"));
 				chat.setName(rs.getString("name"));
 				chat.setOwnerId(rs.getInt("owner_id"));
-
+				chat.setDesc(rs.getString("description"));
+				SimpleDateFormat ft = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+				chat.setDateStr(ft.format(rs.getTimestamp("create_time")));
 			}
 			rs.close();
 			st.close();
@@ -98,7 +109,9 @@ public class ChatDaoImpl implements ChatDao {
 				chat.setId(rs.getInt("id"));
 				chat.setName(rs.getString("name"));
 				chat.setOwnerId(rs.getInt("owner_id"));
-
+				chat.setDateStr(rs.getString("description"));
+				SimpleDateFormat ft = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+				chat.setDateStr(ft.format(rs.getTimestamp("create_time")));
 				chatList.add(chat);
 			}
 
@@ -168,7 +181,9 @@ public class ChatDaoImpl implements ChatDao {
 				chat.setId(rs.getInt("id"));
 				chat.setName(rs.getString("name"));
 				chat.setOwnerId(rs.getInt("owner_id"));
-
+				chat.setDateStr(rs.getString("description"));
+				SimpleDateFormat ft = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+				chat.setDateStr(ft.format(rs.getTimestamp("create_time")));
 				chatList.add(chat);
 			}
 
@@ -222,7 +237,7 @@ public class ChatDaoImpl implements ChatDao {
 			PreparedStatement st = c.prepareStatement(sql);
 			st.setString(1, roomName);
 			st.execute();
-			
+
 			st.close();
 			return true;
 		} catch (Exception ex) {

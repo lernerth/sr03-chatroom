@@ -21,6 +21,8 @@ CREATE TABLE chat (
 	id INT NOT NULL AUTO_INCREMENT,
 	name VARCHAR(30) NOT NULL,
 	owner_id INT NOT NULL,
+	description VARCHAR(200),
+	create_time TIMESTAMP NOT NULL,
 	PRIMARY KEY (id)
 );
 

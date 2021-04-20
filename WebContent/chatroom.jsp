@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"
-	import="services.DataService,services.impl.DataServiceImpl,models.User,java.util.*"%>
+	import="services.DataService,services.impl.DataServiceImpl,models.*,java.util.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
 if (session.getAttribute("user") == null) {
@@ -10,6 +10,7 @@ if (session.getAttribute("user") == null) {
 User u = (User) session.getAttribute("user");
 String roomName = request.getParameter("roomName");
 DataService sd = new DataServiceImpl();
+Chat c = (Chat) sd.findChat(roomName);
 List<User> otherUsers = sd.findUsersNotInChat(roomName);
 List<User> users = sd.findUsersInChat(roomName);
 pageContext.setAttribute("otherUsers", otherUsers);
@@ -33,6 +34,8 @@ pageContext.setAttribute("users", users);
 		
     	<h1 id="roomName"><%=roomName %></h1>
     	<h1 id="userLogin"><%=u.getLogin() %></h1>
+    	<p>Description: <%=c.getDesc() %></p>
+    	<p>Create time: <%=c.getDateStr() %></p>
         <textarea id="history" readonly></textarea>
         <input id="txtMessage" type="text" />
         <button id="btnSend">Send message</button>

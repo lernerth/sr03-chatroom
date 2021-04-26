@@ -14,6 +14,7 @@
 <head>
 <meta charset="utf-8">
 <title>Create a room</title>
+<link rel="stylesheet" type="text/css" href="/Devoir2/css/roomCreation.css">
 </head>
 <body>
 	<h1>Create a chat room</h1>

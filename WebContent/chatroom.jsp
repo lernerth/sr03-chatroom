@@ -50,8 +50,8 @@ pageContext.setAttribute("u", u);
             <span class="title">Users on line</span>
             <div class="user ownself">
                 <div class="avatar"><%=u.getLogin().substring(0, 1).toUpperCase() %></div>
-                <div id="userLogin" class="user_info">
-                	<span class="user_login"><%=u.getLogin() %></span>
+                <div class="user_info">
+                	<span class="user_login" id="userLogin"><%=u.getLogin() %></span>
                 	<span><%=u.getFname() %></span>
                 	<span><%=u.getLname() %></span>
                 </div>

@@ -1,3 +1,7 @@
+function handleCloseMsg(){
+	document.getElementById("msgContainer").style.visibility = "hidden";
+}
+
 window.addEventListener("load", function (event) {
 
     let roomName = document.getElementById("roomName").innerHTML;

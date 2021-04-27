@@ -81,13 +81,16 @@ pageContext.setAttribute("u", u);
             String msg = (String) request.getAttribute("msg");
             if(msg != null){
         %>
-            <p class="err_msg"><%=msg%></p>
-        <%	} %>
+            <div class="err_msg" id="msgContainer">
+            	<span><%=msg %></span>
+            	<span class="msg_close" onclick="handleCloseMsg()">X</span>
+            </div>
+        <% } %>
         <div class="user_invite">
             <form method="post" action="ChatManager?method=invite">
-                <input type="hidden" value="" name="roomName" />
+                <input type="hidden" value="<%=roomName %>" name="roomName" />
                 <label class="invite_title">Invite users : </label>
-                <select name="invitedUserIds">
+                <select name="invitedUserIds" required>
 	                <c:forEach items="${otherUsers}" var="user">           		
 	                	<option value="${user.getId()}">${user.getLogin()}</option>
 	                </c:forEach>

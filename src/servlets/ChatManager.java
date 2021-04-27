@@ -93,6 +93,8 @@ public class ChatManager extends HttpServlet {
 		HttpSession hs = req.getSession();
 		String roomName = req.getParameter("roomName");
 		String[] userIdsStr = req.getParameterValues("invitedUserIds");
+		if(userIdsStr == null)
+			return;
 		int[] userIds = new int[userIdsStr.length];
 
 		for (int i = 0; i < userIdsStr.length; i++) {

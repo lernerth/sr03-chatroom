@@ -49,7 +49,7 @@ public class DataServiceImpl implements DataService {
 	}
 
 	@Override
-	public User checkUserId(String uid) {
+	public User checkUserId(int uid) {
 		return ud.findUserById(uid);
 	}
 
@@ -100,6 +100,7 @@ public class DataServiceImpl implements DataService {
 	@Override
 	public List<User> findUsersNotInChat(String chatName) {
 		Chat chat = cd.findChatByName(chatName);
+		System.out.println("chat id" +chat.getId());
 		if (chat != null)
 			return ud.findUsersNotInChat(chat.getId());
 		return null;
@@ -127,4 +128,14 @@ public class DataServiceImpl implements DataService {
 			return false;
 	}
 
+	@Override
+	public User findOwner(Chat chat) {
+		return findUserById(chat.getOwnerId());
+	}
+	
+	@Override
+	public User findUserById(int id) {
+		User u = ud.findUserById(id);
+		return u;
+	}
 }

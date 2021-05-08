@@ -1,17 +1,46 @@
+body, html {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background: #f6f7ff;
+    margin: 0;
+}
+
 #history {
     display: block;
-    width: 500px;
-    height: 300px;
+    width: 100%;
+    resize: none;
+    height: 100%;
+    font-weight: 600;
+    font-size: 1.1rem;
 }
 
 #txtMessage {
-    display: inline-block;
+    margin-left: 10px;
+    height: 30px;
     width: 300px;
+    border: none;
 }
 
-#btnSend {
-    display: inline-block;
-    width: 180px;
+#txtMessage:focus {
+    border: #0095ff 2px solid;
+    outline: none;
+}
+
+#btnSend, #btnInvite {
+    margin-left: 10px;
+    height: 30px;
+    padding: 0 15px;
+    background-color: #c8cecc;
+    border: none;
+}
+
+#btnSend:hover {
+    cursor: pointer;
 }
 
 #btnClose {
@@ -19,11 +48,144 @@
     width: 500px;
 }
 
-#btnInvite {
-    display: block;
-    width: 500px;
+#blockInvitation {
+    visibility: hidden;
 }
 
-#blockInvitation{
-    visibility: hidden;
+header {
+    height: 10%;
+    line-height: 70px;
+    text-align: center;
+    width: 100%;
+    background: cornflowerblue;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+a {
+    position: absolute;
+    display: block;
+    left: 10px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+a:visited {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+.room_info {
+    position: absolute;
+    right: 10px;
+    font-weight: normal;
+    font-size: 0.7rem;
+}
+
+.main {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 80%;
+}
+
+article {
+    width: 70%;
+}
+
+aside {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    overflow-y: scroll;
+}
+
+.actions {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background: #eaeaea;
+}
+
+.msg_send {}
+
+.user {
+    background-color: #fff;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 85%;
+    height: 70px;
+    margin: 5px 10px;
+    flex: none;
+    color: #0095ff;
+}
+
+.ownself {
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.avatar {
+    height: 30px;
+    width: 30px;
+    font-size: 1rem;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 50%;
+    background-color: #bbbbbb;
+    cursor: default;
+    color: black;
+}
+
+.user_invite {
+    margin-right: 10px;
+}
+
+.err_msg {
+    color: red;
+    background: #fff2e9;
+    border: 1px solid #ffd0b4;
+    width: 300px;
+    padding-left: 5px;
+    position: absolute;
+    bottom: 10%; 
+    display: flex;
+    justify-content: space-between;
+}
+
+.msg_close {
+	color: black;
+	margin: 0 5px;
+}
+
+.msg_close:hover {
+	cursor: pointer;
+}
+
+.title {
+    align-self: flex-start;
+    margin-left: 15px;
+}
+
+.desc{
+    font-weight: bold;
+    margin: 15px;
+}
+
+.user_info {
+	display: flex;
+	flex-direction: column;
+	font-size: .5rem;
+}
+
+.user_login {
+	font-size: 1.5rem;
 }

@@ -7,6 +7,8 @@ public class Chat {
 	private String name;
 	private int id;
 	private int ownerId;
+	private String desc;
+	private String dateStr;
 
 	public int getOwnerId() {
 		return ownerId;
@@ -32,9 +34,26 @@ public class Chat {
 		this.id = id;
 	}
 
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
+	public String getDateStr() {
+		return dateStr;
+	}
+
+	public void setDateStr(String dateStr) {
+		this.dateStr = dateStr;
+	}
+
 	@Override
 	public String toString() {
-		return "Chat [name=" + name + ", id=" + id + ", ownerId=" + ownerId + "]";
+		return "Chat [name=" + name + ", id=" + id + ", ownerId=" + ownerId + ", desc=" + desc + ", dateStr=" + dateStr
+				+ "]";
 	}
 
 }

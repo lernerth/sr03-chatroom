@@ -130,3 +130,11 @@ a:visited {
     margin-top: 30px;
     margin-left: 20px;
 }
+
+.err_msg {
+	color: red;
+    background: #fff2e9;
+    border: 1px solid #ffd0b4;
+    width: 300px;
+    text-align: center;
+}

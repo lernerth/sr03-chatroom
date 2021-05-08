@@ -5,14 +5,21 @@ body, html {
     align-items: center;
     height: 100%;
     width: 100%;
-    position: absolute;
     background: #f6f7ff;
+}
+
+.err_msg {
+    color: red;
+    background: #fff2e9;
+    border: 1px solid #ffd0b4;
+    width: 400px;
+    text-align: center;
 }
 
 .form_container {
     display: flex;
     height: 300px;
-    width: 300px;
+    width: 400px;
     flex-direction: column
 }
 
@@ -25,45 +32,17 @@ body, html {
 }
 
 .actions {
-    margin: 8px;
+    margin: 15px;
     display: flex;
-    width: 100%;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
+    justify-content: space-around;
 }
 
 button {
-    width: 50px;
+    width: 80px;
     margin: 0 10px;
     background-color: #4a63e7;
     color: white;
     border: 0;
     height: 100%;
     cursor: pointer;
-}
-
-.creation_navi_container {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-.small_label {
-    font-size: 0.7rem
-}
-
-.input_icon {
-    display: flex;
-    align-items: center;
-}
-
-.err_msg {
-	color: red;
-    background: #fff2e9;
-    border: 1px solid #ffd0b4;
-    width: 300px;
-    text-align: center;
-    margin-left: 20px;
 }

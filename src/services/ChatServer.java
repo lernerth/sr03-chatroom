@@ -48,14 +48,14 @@ public class ChatServer {
 
 		// login n'existe pas
 		if (u == null) {
-			sendErrMsg(session, "Permission denied! here1");
+			sendErrMsg(session, "Permission denied!");
 			return;
 		}
 
 		if (!rooms.containsKey(roomName)) {
 			chat = ds.findChat(roomName);
 			if (chat == null || !ds.isUserInChat(chat, u.getId())) {
-				sendErrMsg(session, "Permission denied! here2");
+				sendErrMsg(session, "Permission denied!");
 				return;
 			}
 

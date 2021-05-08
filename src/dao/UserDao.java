@@ -11,7 +11,7 @@ public interface UserDao {
 
 	User findUserByLogin(String login);
 
-	User findUserById(String id);
+	User findUserById(int id);
 
 	List<User> findUsersNotInChat(int chatId);
 

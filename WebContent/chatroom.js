@@ -1,8 +1,5 @@
-function handleChange() {
-    console.log("change");
-    let inviContainer = document.getElementById("blockInvitation");
-    let visibility = inviContainer.style.visibility
-    inviContainer.style.visibility = visibility === "visible" ? "hidden" : "visible";
+function handleCloseMsg(){
+	document.getElementById("msgContainer").style.visibility = "hidden";
 }
 
 window.addEventListener("load", function (event) {
@@ -37,7 +34,7 @@ window.addEventListener("load", function (event) {
         txtMessage.focus();
     });
 
-    let btnClose = document.getElementById("btnClose");
+    let btnClose = document.getElementById("btnBack");
     btnClose.addEventListener("click", function (clickEvent) {
         ws.close();
     });

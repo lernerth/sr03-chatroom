@@ -13,7 +13,9 @@ public interface DataService {
 
 	User findUser(String login);
 
-	User checkUserId(String uid);
+	User findUserById(int id);
+	
+	User checkUserId(int uid);
 
 	int addUser(User u);
 
@@ -40,5 +42,7 @@ public interface DataService {
 	boolean deleteChat(String roomName);
 
 	boolean ifUserOwnChat(int uId, String roomName);
+	
+	User findOwner(Chat chat);
 
 }

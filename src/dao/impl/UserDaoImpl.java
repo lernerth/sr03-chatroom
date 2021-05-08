@@ -91,13 +91,13 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public User findUserById(String id) {
+	public User findUserById(int id) {
 		String sql = "SELECT * FROM user WHERE id=?";
 		User u = null;
 		try {
 			Connection c = DB.getConnection();
 			PreparedStatement st = c.prepareStatement(sql);
-			st.setString(1, id);
+			st.setInt(1, id);
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
 				u = new User();

@@ -14,6 +14,7 @@
 <head>
 <meta charset="utf-8">
 <title>Create a room</title>
+<link rel="stylesheet" type="text/css" href="/Devoir2/css/roomCreation.css">
 </head>
 <body>
 	<h1>Create a chat room</h1>
@@ -29,10 +30,13 @@
             <input type="text" name="roomName" required />
         </div>
         <div class="input_container">
-            <label class="big_lable">Owner</label>
-            <input type="text" name="Owner" value="<%=u.getLogin()%>" disabled/>
+            <label class="big_lable">Description</label>
+            <input type="text" name="desc"/>
         </div>
-        
+        <div class="input_container">
+            <label class="big_lable">Owner</label>
+            <input type="text" name="owner" value="<%=u.getLogin()%>" disabled/>
+        </div>
         <div class="actions">
             <button onclick="window.location.href='/Devoir2/main.jsp'">Cancel</button>
             <button type="submit" form="create">Confirm</button>

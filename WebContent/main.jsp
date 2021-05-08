@@ -94,17 +94,6 @@
                     <c:forEach items="${invitedChats}" var="chat">
 						<div class="chat_item">
                             <a href="/Devoir2/chatroom.jsp?roomName=${chat.getName()}" title="join">${chat.getName()}</a>
-                            <form action="/Devoir2/ChatManager?method=delete" method="post">
-                                <Button 
-                                    class="delete_button"
-                                    type="submit"
-                                    name="roomName" 
-                                    value=${chat.getName()}
-                                    title="delete"
-                                >
-                                    <span class="iconfont icon-delete"></span>
-                                </Button>
-                            </form>
                        </div>
                 	</c:forEach>
                 </form>

@@ -40,9 +40,7 @@ pageContext.setAttribute("u", u);
 
     <div class="main">
         <article>
-            <textarea id="history" readonly>
-            </textarea>
-
+            <textarea id="history" readonly></textarea>
         </article>
 
         <aside>

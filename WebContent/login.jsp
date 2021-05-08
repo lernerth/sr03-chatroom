@@ -14,7 +14,7 @@ if (cookies != null) {
 	}
 	if (!"".equals(uid)) {
 		DataService ds = new DataServiceImpl();
-		User u = ds.checkUserId(uid);
+		User u = ds.checkUserId(Integer.valueOf(uid));
 		if (u != null) {
 			//accéder à la page d'accueil
 			session.setMaxInactiveInterval(15 * 60);
